@@ -12,10 +12,11 @@ const config = {
   local: {
     ...defaultConfig,
 
-    LOG_LEVEL: 3, // override log level, set it higher when we're running locally
+    LOG_LEVEL: process.env.LOG_LEVEL || 3 // override log level, set it higher when we're running locally
   },
   development: defaultConfig,
   production: defaultConfig
 };
 
-export default config[process.env.NODE_ENV] || config["local"];
+let currentConfig = config[process.env.NODE_ENV] || config["local"]; // select version using injected NODE_ENV var
+module.exports = currentConfig;
